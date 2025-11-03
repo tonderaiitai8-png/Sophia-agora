@@ -61,7 +61,18 @@
   let cart: CartState = { items: [], total: 0, itemCount: 0 }
   let inputValue = ''
   let sending = false
-  let sessionId = crypto.randomUUID()
+
+  function createSessionId() {
+    if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+      return crypto.randomUUID()
+    }
+
+    const randomPart = Math.random().toString(36).slice(2)
+    const timestampPart = Date.now().toString(36)
+    return `${timestampPart}-${randomPart}`
+  }
+
+  let sessionId = createSessionId()
   let chatBody: HTMLDivElement | null = null
   let messageCounter = 0
   let shouldScroll = false
@@ -116,6 +127,7 @@
       const data: RestaurantConfig = await response.json()
       config = data
       messageCounter = 0
+      sessionId = createSessionId()
       cart = { items: [], total: 0, itemCount: 0 }
       messages = []
       pushMessage(createMessage('assistant', data.prompts.welcomeMessage))
