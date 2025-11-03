@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000'
+const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:3000'
 
 export interface ChatMessage {
   id: string
@@ -15,12 +15,12 @@ export interface CartItem {
 }
 
 export async function healthCheck() {
-  const res = await fetch(`${API_URL}/health`)
+  const res = await fetch(`${API_BASE}/health`)
   return res.json()
 }
 
 export async function sendChatMessage(message: string, sessionId: string) {
-  const res = await fetch(`${API_URL}/api/chat`, {
+  const res = await fetch(`${API_BASE}/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
@@ -33,8 +33,8 @@ export async function sendChatMessage(message: string, sessionId: string) {
   return res.json()
 }
 
-export async function getRestaurantConfig(restaurantId: string = 'woody-andover') {
-  const res = await fetch(`${API_URL}/api/config/${restaurantId}`)
+export async function getRestaurantConfig(restaurantId: string = 'woodys') {
+  const res = await fetch(`${API_BASE}/api/config/${restaurantId}`)
   if (!res.ok) throw new Error(`Config error: ${res.status}`)
   return res.json()
 }

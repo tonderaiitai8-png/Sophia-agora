@@ -1,43 +1,47 @@
-# Svelte + Vite
+# Front-end quick start
 
-This template should help get you started developing with Svelte in Vite.
+This Svelte + Vite app powers the Sophia ordering assistant demo. It expects the Fastify backend to be running so it can fetch the restaurant menu and chat responses.
 
-## Recommended IDE Setup
+## Prerequisites
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+- Node.js 18+
+- npm 9+
 
-## Need an official Svelte framework?
+## Install dependencies
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
-
-## Technical considerations
-
-**Why use this over SvelteKit?**
-
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `checkJs` in the JS template?**
-
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/sveltejs/svelte-hmr/tree/master/packages/svelte-hmr#preservation-of-local-state).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```js
-// store.js
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+```bash
+npm install
 ```
+
+## Run the development server
+
+```bash
+npm run dev -- --open
+```
+
+The command prints a local URL (usually <http://localhost:5173>) and opens it in your browser. The front-end will call the backend API at `http://localhost:3000` by default.
+
+If your backend runs somewhere else, add a `.env` file next to this README with:
+
+```bash
+VITE_API_BASE=https://your-backend-host
+```
+
+Then restart the dev server so Vite picks up the new environment variable.
+
+## Build for production
+
+```bash
+npm run build
+```
+
+The static assets will be output to `dist/`. Preview the production build locally with:
+
+```bash
+npm run preview
+```
+
+## Troubleshooting
+
+- Make sure the backend is running; otherwise chat requests will fail.
+- If you see network errors, double-check the `VITE_API_BASE` value and confirm CORS is allowed from your front-end origin.
